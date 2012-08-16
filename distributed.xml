@@ -5,7 +5,9 @@
   <!-- Client side setup -->
   <clients>
     <!-- Must be hostname, can't be IP -->
-    <client host="localhost" use_controller_vm="true"/>
+    <client host="t1" cpu="8"/>
+    <client host="t2" cpu="8"/>
+    <client host="t3" cpu="8"/>
   </clients>
 
   <!-- Server side setup -->
