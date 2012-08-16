@@ -2,7 +2,7 @@
 <!-- Path should be correct -->
 <!DOCTYPE tsung SYSTEM "/Users/ngocdaothanh/opt/tsung-1.4.2/share/tsung/tsung-1.0.dtd">
 <tsung loglevel="notice" version="1.0">
-  <!-- Client side setup -->
+  <!-- Clients to generate load -->
   <clients>
     <!-- Must be hostname, can't be IP -->
     <client host="t1" cpu="8"/>
@@ -10,11 +10,12 @@
     <client host="t3" cpu="8"/>
   </clients>
 
-  <!-- Server side setup -->
+  <!-- Target servers -->
   <servers>
     <server host="example.com" port="80" type="tcp"></server>
   </servers>
 
+  <!-- Connections ->
   <load>
     <arrivalphase phase="1" duration="1" unit="minute">
       <users arrivalrate="100" unit="second"></users>
@@ -25,7 +26,7 @@
     </arrivalphase>
   </load>
 
-  <!-- Sessions for a user. Sum of all session's probabilities must be 100 -->
+  <!-- Sessions for a connection. Sum of all session's probabilities must be 100 -->
   <sessions>
     <session name="session1" probability="50" type="ts_http">
       <!-- Full URL with server name overrides the "server" config value -->
