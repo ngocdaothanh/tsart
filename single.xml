@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/Users/ngocdaothanh/opt/tsung-1.4.2/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0">
+  <!-- Client side setup -->
+  <clients>
+    <!-- Must be hostname, can't be IP -->
+    <client host="localhost" use_controller_vm="true"/>
+  </clients>
+
+  <!-- Server side setup -->
+  <servers>
+    <server host="example.com" port="80" type="tcp"></server>
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="1" unit="minute">
+      <users arrivalrate="100" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="2" duration="5" unit="minute">
+      <users arrivalrate="200" unit="second"></users>
+    </arrivalphase>
+  </load>
+
+  <!-- Sessions for a user. Sum of all session's probabilities must be 100 -->
+  <sessions>
+    <session name="static_files" probability="100" type="ts_http">
+      <!-- Full URL with server name overrides the "server" config value -->
+      <request><http url="/path1" method="GET" version="1.1"></http></request>
+      <request><http url="/path2" method="GET" version="1.1"></http></request>
+    </session>
+  </sessions>
+</tsung>
