@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- Path should be correct -->
 <!DOCTYPE tsung SYSTEM "/Users/ngocdaothanh/opt/tsung-1.4.2/share/tsung/tsung-1.0.dtd">
 <tsung loglevel="notice" version="1.0">
   <!-- Client side setup -->
