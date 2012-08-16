@@ -13,7 +13,7 @@
     <server host="example.com" port="80" type="tcp"></server>
   </servers>
 
-  <!-- Connections ->
+  <!-- Connections -->
   <load>
     <arrivalphase phase="1" duration="1" unit="minute">
       <users arrivalrate="100" unit="second"></users>
