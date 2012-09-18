@@ -4,6 +4,8 @@ sudo apt-get install libssl-dev
 sudo apt-get install libncurses5-dev
 sudo apt-get install git
 
+-----------------------
+
 cd
 mkdir opt
 mkdir src
@@ -29,3 +31,38 @@ cd tsung-1.4.2/
 export PATH=/home/ubuntu/opt/erlang-R15B02/bin:$PATH
 ./configure --prefix=$HOME/opt/tsung-1.4.2-ws
 make install
+
+-----------------------
+
+gnuplot
+sudo apt-get install gnuplot
+perl ~/opt/tsung-1.4.2-ws/lib/tsung/bin/tsung_stats.pl 
+sudo cpan Template
+
+-----------------------
+
+sudo vim /etc/security/limits.conf
+sudo vim /etc/sysctl.conf
+sudo sysctl -p
+exit
+
+ssh ...
+ulimit -n
+
+-----------------------
+
+sudo vim /etc/environment 
+> Add /home/ubuntu/opt/erlang-R15B02/bin to PATH
+
+vim ~/.ssh/id_dsa
+> Add SSH private key
+chmod 600 ~/.ssh/id_dsa 
+
+ssh localhost erl
+
+-----------------------
+
+sudo apt-get install npm
+sudo npm install http-server -g
+
+nohup http-server -p 8000 &
