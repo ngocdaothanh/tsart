@@ -5,9 +5,15 @@
   <!-- Clients to generate load -->
   <clients>
     <!-- Must be hostname, can't be IP -->
-    <client host="t1" cpu="8"/>
-    <client host="t2" cpu="8"/>
-    <client host="t3" cpu="8"/>
+    <client host="t1" cpu="8" maxusers="200000">
+      <ip scan="true" value="eth0"/>
+    </client>
+    <client host="t2" cpu="8" maxusers="200000"/>
+      <ip scan="true" value="eth0"/>
+    </client>
+    <client host="t3" cpu="8" maxusers="200000"/>
+      <ip scan="true" value="eth0"/>
+    </client>
   </clients>
 
   <!-- Target servers -->
@@ -25,6 +31,19 @@
       <users arrivalrate="200" unit="second"></users>
     </arrivalphase>
   </load>
+
+  <!--
+  http://tsung.erlang-projects.org/user_manual.html
+  If you need to open more than 30000 simultaneous connections on a client
+  machine, you will be limited by the number of TCP client ports, even if
+  you use several IPs (this is true at least on Linux). To bypass this limit,
+  Tsung must not delegate the selection of client ports and together with using
+  several IP for each client, you have to defined a range for available clients
+  ports.
+  -->
+  <options>
+    <option name="ports_range" min="1025" max="65535"/>
+  </options>
 
   <!-- Sessions for a connection. Sum of all session's probabilities must be 100 -->
   <sessions>
