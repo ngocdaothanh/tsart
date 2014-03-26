@@ -1,0 +1,103 @@
+#Setup tsung for AmazonLinux
+
+Reference -> http://www.slideshare.net/ngocdaothanh/tsung-13985127 (Tsung 1.4.2)
+
+---------
+## For OS setup
+
+`sudo yum install gcc`
+
+`sudo vim /etc/security/limits.conf`
+
+		*  soft  nofile  1024000
+		*  hard  nofile  1024000
+
+`logout`
+
+`ulimit -n`
+
+`sudo vim /etc/sysctl.conf`
+
+		# General gigabit tuning
+		net.core.rmem_max = 16777216
+		net.core.wmem_max = 16777216
+		net.ipv4.tcp_rmem = 4096 87380 16777216
+		net.ipv4.tcp_wmem = 4096 65536 16777216
+
+		# This gives the kernel more memory for TCP
+		# which you need with many (100k+) open socket connections
+		net.ipv4.tcp_mem = 50576 64768 98152
+
+		# Backlog
+		net.core.netdev_max_backlog = 2048
+		net.core.somaxconn = 1024
+		net.ipv4.tcp_max_syn_backlog = 2048
+		net.ipv4.tcp_syncookies = 1
+
+`sudo sysctl -p`
+
+---------
+## Install Erlang
+
+`mkdir ~/opt`
+
+`sudo yum install ncurses-devel`
+
+`sudo yum install openssl-devel`
+
+`wget http://www.erlang.org/download/otp_src_R16B03-1.tar.gz`
+
+`tar xzf otp_src_R16B03-1.tar.gz`
+
+`cd otp_src_R16B03-1`
+
+`./configure --prefix=$HOME/opt/erlang-R16B03-1`
+
+`make install`
+
+`sudo echo 'pathmunge /home/ec2-user/opt/erlang-R16B03-1/bin' > /etc/profile.d/erlang.sh`
+
+`sudo chmod +x /etc/profile.d/erlang.sh`
+
+---------
+## Install Tsung
+
+`wget http://tsung.erlang-projects.org/dist/tsung-1.5.0.tar.gz`
+
+`tar xzf tsung-1.5.0.tar.gz`
+
+`cd tsung-1.5.0`
+
+`./configure --prefix=$HOME/opt/tsung-1.5.0`
+
+`make install`
+
+### For tsplot
+
+`sudo yum install numpy`
+
+`sudo yum install scipy`
+
+`sudo yum install python-matplotlib`
+
+### For ssh login
+
+`mv XXXXX.key ~/.ssh/id.rsa`
+
+---------
+
+http://www.turbolinux.com/support/document/knowledge/152.html
+
+---
+## Start tsung test
+
+`~/opt/tsung-1.5.0/bin/tsung -f t1.xml start`
+
+
+`~/opt/tsung-1.5.0/bin/tsung -f status`
+
+### Reporting
+
+`~/opt/tsung-1.5.0/bin/tsplot "first" tsung.log  -d ~/outputdir`
+
+`cd ~/outputdir && python -m SimpleHTTPServer`
