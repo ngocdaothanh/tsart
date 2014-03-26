@@ -80,6 +80,12 @@ Reference -> http://www.slideshare.net/ngocdaothanh/tsung-13985127 (Tsung 1.4.2)
 
 `sudo yum install python-matplotlib`
 
+`sudo yum install gnuplot`
+
+`sudo yum install perl-CPAN`
+
+`sudo cpan Template`
+
 ### For ssh login
 
 `mv XXXXX.key ~/.ssh/id.rsa`
@@ -98,6 +104,11 @@ http://www.turbolinux.com/support/document/knowledge/152.html
 
 ### Reporting
 
+Create html report
+~/opt/tsung-1.5.0/lib/tsung/bin/tsung_stats.pl
+
+Create only png files
 `~/opt/tsung-1.5.0/bin/tsplot "first" tsung.log  -d ~/outputdir`
 
-`cd ~/outputdir && python -m SimpleHTTPServer`
+Start simple http server
+`python -m SimpleHTTPServer`
