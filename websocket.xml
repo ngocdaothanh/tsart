@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!-- Path should be correct -->
+<!DOCTYPE tsung SYSTEM "/home/ec2-user/opt/tsung-1.5.0/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0">
+  <!-- Clients to generate load -->
+  <clients>
+    <!-- Must be hostname, can't be IP -->
+    <client host="tsung1" >
+      <ip scan="true" value="eth0"/>
+    </client>
+    <!--
+    <client host="tsung2" >
+      <ip scan="true" value="eth0"/>
+    </client>
+    <client host="tsung3" >
+      <ip scan="true" value="eth0"/>
+    </client>
+    -->
+  </clients>
+
+  <!-- Target servers -->
+  <servers>
+    <!-- Amazon ELB overrite `upgrade` header if port 80 is used as HTTP mode
+         Make sure you have set inbound port protocol as TCP-->
+    <server host="MY_ELB.ap-northeast-1.elb.amazonaws.com" port="8000" type="tcp"></server>
+  </servers>
+
+  <!-- Connections -->
+  <load>
+    <arrivalphase phase="1" duration="1" unit="minute">
+      <users arrivalrate="5" unit="second"></users>
+    </arrivalphase>
+  </load>
+
+  <!--
+  http://tsung.erlang-projects.org/user_manual.html
+  If you need to open more than 30000 simultaneous connections on a client
+  machine, you will be limited by the number of TCP client ports, even if
+  you use several IPs (this is true at least on Linux). To bypass this limit,
+  Tsung must not delegate the selection of client ports and together with using
+  several IP for each client, you have to defined a range for available clients
+  ports.
+  -->
+  <options>
+    <option name="ports_range" min="1025" max="65535"/>
+    <option name="websocket_path" value="/chat"/>
+    <!--
+    Tsung 1.5.0 does not support text-frame.
+    All frame will be sent as binary-frame. Wait new Tsung release!
+    <option name="websocket_frame" value="text"/>
+    -->
+  </options>
+
+  <!-- Sessions for a connection. Sum of all session's probabilities must be 100 -->
+  <sessions>
+    <session probability="100" name="websocket-example" type="ts_websocket">
+      <transaction name="login_request">
+        <request>
+          <websocket type="connect" path="/chat"></websocket>
+        </request>
+        <request>
+          <dyn_variable name="uuid"/>
+          <websocket type="message">{"seq":0,"tag":"login","userId":"uuid","password":"password"}</websocket>
+        </request>
+      </transaction>
+
+      <!-- stay connected  -->
+      <for var="i" from="1" to="100" incr="1">
+        <thinktime value="25"/>
+        <request>
+          <websocket type="message">h</websocket>
+        </request>
+      </for>
+    </session>
+  </sessions>
+</tsung>
