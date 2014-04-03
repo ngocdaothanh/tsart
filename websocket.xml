@@ -68,7 +68,7 @@
       <for var="i" from="1" to="100" incr="1">
         <thinktime value="25"/>
         <request>
-          <websocket type="message">h</websocket>
+          <websocket ack="no_ack" type="message">h</websocket>
         </request>
       </for>
     </session>
