@@ -83,6 +83,22 @@ Edit `/etc/sysctl.conf`
 
 `make install`
 
+
+### Install from latest source
+
+`sudo yum install git`
+
+`sudo yum install autoconf`
+
+`git clone https://github.com/processone/tsung.git tsung-latest`
+
+`cd tsung-latest/`
+
+`./configure --prefix=$HOME/opt/tsung-latest`
+
+`make install`
+
+
 ### For Reporting
 
 `sudo yum install numpy`

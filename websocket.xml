@@ -58,9 +58,9 @@
         <request>
           <websocket type="connect" path="/chat"></websocket>
         </request>
-        <request>
-          <dyn_variable name="uuid"/>
-          <websocket type="message">{"seq":0,"tag":"login","userId":"uuid","password":"password"}</websocket>
+        <request subst="true">
+          <!-- If you want to set unique id, you can use the built-in function ts_user_server:get_unique_id -->
+          <websocket type="message">{"seq":0,"tag":"login","userId":"%%ts_user_server:get_unique_id%%","password":"password"}</websocket>
         </request>
       </transaction>
 
